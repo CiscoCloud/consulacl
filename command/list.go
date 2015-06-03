@@ -15,7 +15,7 @@ type ListCommand struct {
 
 func (c *ListCommand) Help() string {
 	helpText := `
-Usage consulacl list [options]
+Usage: consulacl list [options]
 
   List all active ACL tokens.
 
