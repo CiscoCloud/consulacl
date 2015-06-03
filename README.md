@@ -16,7 +16,7 @@ $ make
 usage: consulacl [--version] [--help] <command> [<args>]
 
 Available commands are:
-    [clone](#clone command)      Create a new token from an existing one
+    [clone](#clone-command)      Create a new token from an existing one
     create     Create an ACL
     destroy    Destroy an ACL
     info       Query an ACL token
