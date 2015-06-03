@@ -13,6 +13,11 @@ func init() {
 	ui := &cli.BasicUi{ Writer: os.Stdout }
 
 	Commands = map[string]cli.CommandFactory{
+		"clone": func() (cli.Command, error) {
+			return &command.CloneCommand{
+				UI: ui,
+			}, nil
+		},
 		"create": func() (cli.Command, error) {
 			return &command.CreateCommand{
 				UI: ui,
@@ -23,8 +28,18 @@ func init() {
 				UI: ui,
 			}, nil
 		},
+		"info": func() (cli.Command, error) {
+			return &command.InfoCommand{
+				UI: ui,
+			}, nil
+		},
 		"list": func() (cli.Command, error) {
 			return &command.ListCommand{
+				UI: ui,
+			}, nil
+		},
+		"update": func() (cli.Command, error) {
+			return &command.UpdateCommand{
 				UI: ui,
 			}, nil
 		},

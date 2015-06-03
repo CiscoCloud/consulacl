@@ -45,6 +45,8 @@ Options:
 				(default: not set)
   --management			Create a management token
 				(default: false)
+  --name			Name of the ACL
+				(default: not set)
   --rule='type:path:policy'	Rule to create. Can be multiple rules on a command line
 				(default: not set)
 `
@@ -54,9 +56,11 @@ Options:
 
 func (c *CreateCommand) Run(args []string) int {
 	var isManagement bool
+	var aclName string
 
 	c.Consul = new(ConsulFlags)
 	cmdFlags := NewFlagSet(c.Consul)
+	cmdFlags.StringVar(&aclName, "name", "", "")
 	cmdFlags.BoolVar(&isManagement, "management", false, "")
 	cmdFlags.Var((funcVar)(func(s string) error {
 		t, err := ParseRuleConfig(s)
@@ -76,12 +80,12 @@ func (c *CreateCommand) Run(args []string) int {
 		return 1
 	}
 
-	if len(c.ConfigRules) < 1 && !isManagement {
-		c.UI.Error("Must supply an acl rule")
-		c.UI.Error("")
-		c.UI.Error(c.Help())
-		return 1
-	}
+//	if len(c.ConfigRules) < 1 && !isManagement {
+//		c.UI.Error("Must supply an acl rule")
+//		c.UI.Error("")
+//		c.UI.Error(c.Help())
+//		return 1
+//	}
 
 	consul, err := NewConsulClient(c.Consul, &c.UI)
 	if err != nil {
@@ -95,6 +99,7 @@ func (c *CreateCommand) Run(args []string) int {
 
 	if isManagement {
 		entry = &consulapi.ACLEntry{
+			Name:	aclName,
 			Type:	consulapi.ACLManagementType,
 		}
 	} else {
@@ -105,6 +110,7 @@ func (c *CreateCommand) Run(args []string) int {
 		}
 
 		entry = &consulapi.ACLEntry{
+			Name:	aclName,
 			Type:	consulapi.ACLClientType,
 			Rules:	rules,
 		}
