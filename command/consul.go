@@ -2,6 +2,7 @@ package command
 
 import (
 	"crypto/tls"
+	"errors"
 	"fmt"
 	"net/http"
 	"strings"
@@ -22,7 +23,7 @@ type ConsulFlags struct {
 }
 
 func NewFlagSet(c *ConsulFlags) *flag.FlagSet {
-	consulFlags := flag.NewFlagSet("consulkv", flag.ContinueOnError)
+	consulFlags := flag.NewFlagSet("consulacl", flag.ContinueOnError)
 	consulFlags.StringVar(&c.consulAddr, "consul", "127.0.0.1:8500", "")
 	consulFlags.BoolVar(&c.sslEnabled, "ssl", false, "")
 	consulFlags.BoolVar(&c.sslVerify, "ssl-verify", true, "")
@@ -42,6 +43,8 @@ func NewConsulClient(c *ConsulFlags, ui *cli.Ui) (*consulapi.Client, error) {
 
 	if c.token != "" {
 		config.Token = c.token
+	} else {
+		return nil, errors.New("A management token must be provided")
 	}
 
 	if c.sslEnabled {

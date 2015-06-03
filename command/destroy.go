@@ -41,6 +41,7 @@ Options:
 func (c *DestroyCommand) Run(args []string) int {
 	c.Consul = new(ConsulFlags)
 	cmdFlags := NewFlagSet(c.Consul)
+	cmdFlags.Usage = func() { c.UI.Output(c.Help()) }
 
 	if err := cmdFlags.Parse(args); err != nil {
 		return 1

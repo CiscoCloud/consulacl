@@ -75,6 +75,7 @@ func (c *CreateCommand) Run(args []string) int {
 		c.ConfigRules = append(c.ConfigRules, t)
 		return nil
 	}), "rule", "")
+	cmdFlags.Usage = func() { c.UI.Output(c.Help()) }
 
 	if err := cmdFlags.Parse(args); err != nil {
 		return 1

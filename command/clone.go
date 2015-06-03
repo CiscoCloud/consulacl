@@ -16,7 +16,7 @@ func (c *CloneCommand) Help() string {
 	helpText := `
 Usage: consulacl clone [options] id
 
-  Query information about an ACL token
+  Create a new token from an existing one
 
 Options:
 
@@ -41,6 +41,7 @@ Options:
 func (c *CloneCommand) Run(args []string) int {
 	c.Consul = new(ConsulFlags)
 	cmdFlags := NewFlagSet(c.Consul)
+	cmdFlags.Usage = func() { c.UI.Output(c.Help()) }
 
 	if err := cmdFlags.Parse(args); err != nil {
 		return 1
