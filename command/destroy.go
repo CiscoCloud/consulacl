@@ -3,7 +3,6 @@ package command
 import (
 	"strings"
 
-	consulapi "github.com/hashicorp/consul/api"
 	"github.com/mitchellh/cli"
 )
 
@@ -63,9 +62,7 @@ func (c *DestroyCommand) Run(args []string) int {
 	}
 	client := consul.ACL()
 
-	writeOpts := new(consulapi.WriteOptions)
-
-	_, err = client.Destroy(id, writeOpts)
+	_, err = client.Destroy(id, nil)
 	if err != nil {
 		c.UI.Error(err.Error())
 		return 1

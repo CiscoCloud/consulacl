@@ -3,7 +3,6 @@ package command
 import (
 	"strings"
 
-	consulapi "github.com/hashicorp/consul/api"
 	"github.com/mitchellh/cli"
 )
 
@@ -62,9 +61,8 @@ func (c *CloneCommand) Run(args []string) int {
 		return 1
 	}
 	client := consul.ACL()
-	writeOpts := new(consulapi.WriteOptions)
 
-	newid, _, err := client.Clone(id, writeOpts)
+	newid, _, err := client.Clone(id, nil)
 	if err != nil {
 		c.UI.Error(err.Error())
 		return 1

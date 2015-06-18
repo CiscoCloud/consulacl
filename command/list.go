@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"strings"
 
-	consulapi "github.com/hashicorp/consul/api"
 	"github.com/mitchellh/cli"
 )
 
@@ -48,7 +47,6 @@ func (c *ListCommand) Run(args []string) int {
 		return 1
 	}
 
-	queryOpts := new(consulapi.QueryOptions)
 	consul, err := NewConsulClient(c.Consul, &c.UI)
 	if err != nil {
 		c.UI.Error(err.Error())
@@ -56,7 +54,7 @@ func (c *ListCommand) Run(args []string) int {
 	}
 	client := consul.ACL()
 
-	acls, _, err := client.List(queryOpts)
+	acls, _, err := client.List(nil)
 	if err != nil {
 		c.UI.Error(err.Error())
 		return 1

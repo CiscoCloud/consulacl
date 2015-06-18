@@ -88,7 +88,6 @@ func (c *UpdateCommand) Run(args []string) int {
 		return 1
 	}
 	client := consul.ACL()
-	writeOpts := new(consulapi.WriteOptions)
 
 	var entry *consulapi.ACLEntry
 
@@ -114,7 +113,7 @@ func (c *UpdateCommand) Run(args []string) int {
 
 	}
 
-	_, err = client.Update(entry, writeOpts)
+	_, err = client.Update(entry, nil)
 	if err != nil {
 		c.UI.Error(err.Error())
 		return 1

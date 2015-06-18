@@ -81,20 +81,12 @@ func (c *CreateCommand) Run(args []string) int {
 		return 1
 	}
 
-//	if len(c.ConfigRules) < 1 && !isManagement {
-//		c.UI.Error("Must supply an acl rule")
-//		c.UI.Error("")
-//		c.UI.Error(c.Help())
-//		return 1
-//	}
-
 	consul, err := NewConsulClient(c.Consul, &c.UI)
 	if err != nil {
 		c.UI.Error(err.Error())
 		return 1
 	}
 	client := consul.ACL()
-	writeOpts := new(consulapi.WriteOptions)
 
 	var entry *consulapi.ACLEntry
 
@@ -118,7 +110,7 @@ func (c *CreateCommand) Run(args []string) int {
 
 	}
 
-	id, _, err := client.Create(entry, writeOpts)
+	id, _, err := client.Create(entry, nil)
 	if err != nil {
 		c.UI.Error(err.Error())
 		return 1
