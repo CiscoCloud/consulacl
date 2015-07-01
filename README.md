@@ -5,7 +5,7 @@ Command line interface to the [Consul ACL HTTP API](https://consul.io/docs/agent
 You can download a released `consulacl` artifact from [the consulacl release page][Releases] on Github. If you wish to compile from source, you will need to have buildtools and [Go][] installed:
 
 ```shell
-$ git clone https://github.com/CiscoCloud/consulkv.git
+$ git clone https://github.com/CiscoCloud/consulacl.git
 $ cd consulacl
 $ make
 ```
